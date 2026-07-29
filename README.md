@@ -1,4 +1,5 @@
-<h1> Basics: </h1> 
+# Basics:
+
 ```
   git commit -a 
   git push 
