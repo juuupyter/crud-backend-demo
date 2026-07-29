@@ -39,3 +39,4 @@ async def root():
     return {'message': 'hello world'}
 ```
 Asynchronous decorator function that will handle GET requests going to the path set above.
+Following this the app can be deployed on FastAPI cloud. 
