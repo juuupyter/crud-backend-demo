@@ -48,4 +48,4 @@ async def root():
 Asynchronous decorator function that will handle GET requests going to the path set above.
 Following this the app can be deployed on FastAPI cloud. 
 
-[](https://raw.githubusercontent.com/juuupyter/project1/refs/heads/main/images/195195.png)
+(https://raw.githubusercontent.com/juuupyter/project1/refs/heads/main/images/195195.png)
