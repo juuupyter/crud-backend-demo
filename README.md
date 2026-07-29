@@ -1,4 +1,4 @@
-# Basics:
+## Basics:
 
 ```
   git commit -a 
@@ -28,3 +28,4 @@ Switch to the main branch before merging.
 ```
 Merged main with branch feature and pushed to add the changes. 
   
+## FastAPI:
