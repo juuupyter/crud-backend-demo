@@ -1,7 +1,9 @@
 Basics:
+'''
   git commit -a 
   git push 
-Created the first file 'proj.py' on the repository.
+'''
+  Created the first file 'proj.py' on the repository.
 
   git checkout -b feature
 Created the branch feature to test a new feature for 'proj.py'.
