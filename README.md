@@ -29,3 +29,13 @@ Switch to the main branch before merging.
 Merged main with branch feature and pushed to add the changes. 
   
 ## FastAPI:
+```
+app = FastAPI()
+@app.get("/")
+```
+Sets the route to/from the dev server using a path operation.
+```
+async def root():
+    return {'message': 'hello world'}
+```
+Asynchronous decorator function that will handle GET requests going to the path set above.
