@@ -1,4 +1,4 @@
-#**Basics:**
+# Basics:
 ```
   git commit -a 
   git push 
