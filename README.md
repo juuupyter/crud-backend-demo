@@ -27,6 +27,13 @@ Switch to the main branch before merging.
   git push
 ```
 Merged main with branch feature and pushed to add the changes. 
+```
+  git fetch origin main (from github.com/user/project)
+  git merge origin/main
+  git push origin main
+```
+Sync remote branches with local copies and merge them.   
+
   
 ## FastAPI:
 ```
