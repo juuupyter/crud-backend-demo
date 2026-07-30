@@ -50,6 +50,7 @@ Following this the app can be deployed on FastAPI cloud.
 
 <img width="397" height="128" alt="195195" src="https://github.com/user-attachments/assets/236e5a6c-ada8-4173-a4be-fb0172977afd" />
 
+
 ```
   class Item(pydantic.BaseModel):
     name: str
@@ -62,5 +63,14 @@ Following this the app can be deployed on FastAPI cloud.
     item_data.append(item.model_dump())
     return item
 ```
-  
+Using Pydantic for request body handling. When /items/ recieves a post request, we have the model_dump() function inherited from BaseModel save the created item data for use in the next function. 
+```
+  @app.get('/items/')
+  async def read_items(q: Annotated[int | None, fastapi.Query(le=5)] = None):
+    if q == None:
+      return item_data
+    else:
+      return item_data[q]
+```
+Using typing's Annotated for clearer validation. Q is an optional query parameter that can be of type Int or None. These cases are handled below so that get requests either recieve a list of all created items, or a specific created item (q) from the last 5 items.  
 
