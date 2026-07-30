@@ -1,3 +1,4 @@
+
 ## Basics:
 
 ```
@@ -73,4 +74,7 @@ Using Pydantic for request body handling. When /items/ recieves a post request, 
       return item_data[q]
 ```
 Using typing's Annotated for clearer validation. Q is an optional query parameter that can be of type Int or None. These cases are handled below so that get requests either recieve a list of all created items, or a specific created item (q) from the last 5 items.  
+
+<img width="1405" height="143" alt="dope2abc0e44-a845-49fd-896a-f85c0ee6716f" src="https://github.com/user-attachments/assets/25ec7c03-849c-4bfd-ba77-184d7da28e18" />
+<img width="519" height="139" alt="dopecc03274d-bc9a-4d8e-b276-db107dad079b" src="https://github.com/user-attachments/assets/8f032f31-ab3a-44db-ae5d-c34980ec3b5f" />
 
