@@ -50,3 +50,17 @@ Following this the app can be deployed on FastAPI cloud.
 
 <img width="397" height="128" alt="195195" src="https://github.com/user-attachments/assets/236e5a6c-ada8-4173-a4be-fb0172977afd" />
 
+```
+  class Item(pydantic.BaseModel):
+    name: str
+    description: str | None
+    price: float
+
+  item_data = []
+  @app.post('/items')
+  async def create_item(item:Item):
+    item_data.append(item.model_dump())
+    return item
+```
+  
+
