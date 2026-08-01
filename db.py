@@ -53,7 +53,7 @@ def hash_secret(secret: str) -> str:
 @app.post('/users/', response_model=UserPublic)
 def create_user(user: UserCreate, session: SessionDep):
     hashed_secret = hash_secret(user.secret)
-    extra_data = {'hashed': hashed_secret}
+    extra_data = {'hashed_secret': hashed_secret}
     db_user = User.model_validate(user, update=extra_data) #Replace the secret field from UserCreate with User's hashed_secret field. 
     session.add(db_user)
     session.commit()
@@ -62,7 +62,7 @@ def create_user(user: UserCreate, session: SessionDep):
 
 @app.get('/users/', response_model=list[UserPublic])
 def read_users(session: SessionDep, offset: int = 0, limit: Annotated[int, fastapi.Query(le=100)] = 100):
-    users = session.exec(select(UserBase).offset(offset).limit(limit)).all()
+    users = session.exec(select(User).offset(offset).limit(limit)).all()
     return users 
 
 @app.patch('/users', response_model=UserPublic)
@@ -84,10 +84,10 @@ def update_users(user_id: int, user: UserUpdate, session: SessionDep):
 
 @app.delete('/users')
 def delete_user(user_id: int, session: SessionDep):
-    user = session.get(UserBase, user_id)
+    user = session.get(User, user_id)
     if not user:
         raise fastapi.HTTPException(status_code=404, detail='User not found')
     session.delete(user)
-    session.commit
+    session.commit()
     return {'ok': True}
 
