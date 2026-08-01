@@ -1,10 +1,10 @@
-import fastapi, os
+import fastapi, os, passlib
 from dotenv import load_dotenv
 from pydantic import BaseModel
 from typing import Annotated
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 from contextlib import asynccontextmanager
-from pathlib import Path
+from passlib.hash import pbkdf2_sha256
 
 
 load_dotenv()
@@ -32,7 +32,7 @@ class UserBase(SQLModel):
 
 class User(UserBase, table=True): #inherits UserBase
     id: int | None = Field(default=None, primary_key=True)
-    secret: str
+    hashed_secret: str = Field()
 
 class UserPublic(UserBase):
     id: int #for the API
@@ -45,10 +45,16 @@ class UserUpdate(UserBase): #optional so a variable amount of fields can be upda
     age: int | None = None
     secret: str | None = None
 
+def hash_secret(secret: str) -> str:
+    hash = pbkdf2_sha256.hash(secret)
+    return hash
+
 
 @app.post('/users/', response_model=UserPublic)
 def create_user(user: UserCreate, session: SessionDep):
-    db_user = User.model_validate(user)
+    hashed_secret = hash_secret(user.secret)
+    extra_data = {'hashed': hashed_secret}
+    db_user = User.model_validate(user, update=extra_data) #Replace the secret field from UserCreate with User's hashed_secret field. 
     session.add(db_user)
     session.commit()
     session.refresh(db_user)
@@ -65,7 +71,12 @@ def update_users(user_id: int, user: UserUpdate, session: SessionDep):
     if not db_user:
         raise fastapi.HTTPException(status_code=404, detail='User not found')
     user_data = user.model_dump(exclude_unset=True) #dont override unsent data with null values
-    db_user.sqlmodel_update(user_data)
+    extra_data = {}
+    if "secret" in user_data: 
+        secret = user_data["secret"]
+        hashed_secret = hash_secret(secret)
+        extra_data['hashed_secret'] = hashed_secret
+    db_user.sqlmodel_update(user_data, update=extra_data)
     session.add(db_user)
     session.commit()
     session.refresh(db_user)
