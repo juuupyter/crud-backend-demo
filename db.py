@@ -26,7 +26,7 @@ async def lifespan(app: fastapi.FastAPI):
 
 app = fastapi.FastAPI(lifespan=lifespan)
 
-class UserBase(SQLModel, table=True):
+class UserBase(SQLModel):
     name: str = Field(index=True)
     age: int | None = Field(default=None, index=True)
 
